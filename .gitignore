@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Local and OS files
+.DS_Store
+*.log
+
+# Local visual QA artifacts
+implementation-*.png
+source-structured-casebook.png
+design-qa-comparison.png
+design-qa.md
+AGENTS.md
+
+# Source captures retained locally but not required by the site
+public/assets/kiriha/site-capture.png
+public/assets/hidamari/site-capture.png
+
+# Editor files
+.idea/
+.vscode/
