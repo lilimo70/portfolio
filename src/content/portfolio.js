@@ -1,8 +1,7 @@
 export const portfolio = {
-  owner: "PORTFOLIO",
+  owner: "NAO FUCHIWAKI",
   role: "EC / Web / Graphic / Promotion / Direction",
   hero: {
-    eyebrow: "FROM INFORMATION TO EXPERIENCE",
     title: "情報を整理し、\n伝わる構成を考え、\nWebとして形にする。",
     introduction: "EC・Web・グラフィック・販促・印刷の実務で、企画から制作、調整、運用までを経験。現在はその延長線上で、情報設計、Web/UIデザイン、実装へ領域を広げています。",
     process: ["企画", "情報整理", "構成・デザイン", "制作・調整", "公開・改善"],
@@ -88,6 +87,5 @@ export const portfolio = {
   ],
   contact: {
     title: "一緒に、\n伝わるWebをつくる。", text: "Webサイト制作、情報設計、運用・改善に関するご相談など。連絡先は現在更新準備中です。",
-    status: "Contact information is being updated.",
   },
 };

@@ -23,7 +23,7 @@ function Header() {
 
 function Hero() {
   return <section className="hero" id="top">
-    <div className="hero-title"><span className="vertical-note">{portfolio.hero.eyebrow}</span><div><h1>{portfolio.hero.title}</h1><p className="role-line">{portfolio.role}</p></div></div>
+    <div className="hero-title"><h1>{portfolio.hero.title}</h1><p className="role-line">{portfolio.role}</p></div>
     <div className="hero-context"><p>{portfolio.hero.introduction}</p><ol className="process" aria-label="仕事のプロセス">{portfolio.hero.process.map((item) => <li key={item}>{item}</li>)}</ol></div>
   </section>;
 }
@@ -42,7 +42,7 @@ function WorkCase({ work }) {
 function ProfessionalArchive() {
   const archive = portfolio.professionalArchive;
   return <section className="archive" id="professional">
-    <div className="archive-heading section-index"><b>{archive.number}</b><div><span>Professional Archive</span><h2>{archive.title}</h2><p>{archive.lead}</p></div></div>
+    <div className="archive-heading section-index"><b>{archive.number}</b><div><h2>{archive.title}</h2><p>{archive.lead}</p></div></div>
     <div className="archive-groups">{archive.groups.map((group, groupIndex) => <article className={`archive-group archive-group-${groupIndex + 1}`} key={group.id}>
       <div className="archive-images">{group.images.map((image, index) => <figure key={image.src} className={`archive-image archive-image-${index + 1}`}><img src={image.src} alt={image.alt} loading="lazy" /></figure>)}</div>
       <div className="archive-copy"><p className="archive-label">{group.label}</p><h3>{group.title}</h3><p>{group.description}</p>{group.highlight && <aside><b>{group.highlight.title}</b><p>{group.highlight.text}</p></aside>}{group.note && <small>{group.note}</small>}</div>
@@ -51,21 +51,21 @@ function ProfessionalArchive() {
 }
 
 function About() {
-  return <section className="about split-section" id="about"><div className="section-label"><span>04</span><p>About</p></div><h2>{portfolio.about.title}</h2><div className="body-copy">{portfolio.about.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div></section>;
+  return <section className="about split-section" id="about"><div className="section-label"><p>About</p></div><h2>{portfolio.about.title}</h2><div className="body-copy">{portfolio.about.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div></section>;
 }
 
 function Expertise() {
-  return <section className="expertise" id="expertise"><div className="section-label"><span>05</span><p>Expertise</p></div><div className="expertise-list">{portfolio.expertise.map((item, index) => <article key={item.title}><span>{String(index + 1).padStart(2, "0")}</span><h3>{item.title}</h3><p>{item.detail}</p></article>)}</div></section>;
+  return <section className="expertise" id="expertise"><div className="section-label"><p>Expertise</p></div><div className="expertise-list">{portfolio.expertise.map((item) => <article key={item.title}><h3>{item.title}</h3><p>{item.detail}</p></article>)}</div></section>;
 }
 
 function Experience() {
-  return <section className="experience" id="experience"><div className="section-label"><span>06</span><p>Professional Experience</p></div><div className="experience-list">{portfolio.experience.map((item, index) => <article key={item.name}><span className="experience-number">{String(index + 1).padStart(2, "0")}</span><h3>{item.name}</h3><p className="experience-area">{item.area}</p><p>{item.description}</p></article>)}</div></section>;
+  return <section className="experience" id="experience"><div className="section-label"><p>Professional Experience</p></div><div className="experience-list">{portfolio.experience.map((item) => <article key={item.name}><h3>{item.name}</h3><p className="experience-area">{item.area}</p><p>{item.description}</p></article>)}</div></section>;
 }
 
 function Contact() {
-  return <section className="contact" id="contact"><div className="section-label"><span>07</span><p>Contact</p></div><h2>{portfolio.contact.title}</h2><div><p>{portfolio.contact.text}</p><p className="contact-status">{portfolio.contact.status}</p></div></section>;
+  return <section className="contact" id="contact"><div className="section-label"><p>Contact</p></div><h2>{portfolio.contact.title}</h2><div><p>{portfolio.contact.text}</p></div></section>;
 }
 
 export function App() {
-  return <><Header /><main><Hero /><section id="works" aria-label="Selected Works">{portfolio.works.map((work) => <WorkCase work={work} key={work.id} />)}</section><ProfessionalArchive /><About /><Expertise /><Experience /><Contact /></main><footer><a href="#top">{portfolio.owner}</a><p>{portfolio.role}</p><span>© 2026</span></footer></>;
+  return <><Header /><main><Hero /><section id="works" aria-label="Selected Works">{portfolio.works.map((work) => <WorkCase work={work} key={work.id} />)}</section><ProfessionalArchive /><About /><Expertise /><Experience /><Contact /></main><footer><a href="#top">{portfolio.owner}</a><span>© 2026</span></footer></>;
 }
