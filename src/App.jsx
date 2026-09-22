@@ -63,7 +63,7 @@ function Experience() {
 }
 
 function Contact() {
-  return <section className="contact" id="contact"><div className="section-label"><p>Contact</p></div><h2>{portfolio.contact.title}</h2><div><p>{portfolio.contact.text}</p></div></section>;
+  return <section className="contact" id="contact"><div className="section-label"><p>Contact</p></div><h2>{portfolio.contact.title}</h2><div><p>{portfolio.contact.text}</p><a className="contact-email" href={`mailto:${portfolio.contact.email}`}>{portfolio.contact.email}</a></div></section>;
 }
 
 export function App() {

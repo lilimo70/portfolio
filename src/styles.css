@@ -72,6 +72,7 @@ button { color:inherit; }
 .split-section h2,.contact h2 { white-space:pre-line; font-size:clamp(30px,3.3vw,50px); font-weight:500; line-height:1.45; letter-spacing:-.03em; }
 .body-copy p,.contact>div:last-child>p:first-child { font-size:13px; line-height:2; color:#4e504b; }
 .body-copy p+p { margin-top:18px; }
+.contact-email { display:inline-block; margin-top:24px; padding-bottom:5px; border-bottom:1px solid var(--ink); font-size:15px; }
 .expertise,.experience { border-top:1px solid var(--line); padding:34px var(--side) clamp(84px,9vw,130px); }
 .expertise-list { margin-top:66px; display:grid; grid-template-columns:repeat(4,1fr); }
 .expertise-list article { min-height:170px; padding:0 24px 24px; border-left:1px solid var(--line); }

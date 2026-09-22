@@ -86,6 +86,8 @@ export const portfolio = {
     { name: "印刷事業", area: "Design / DTP / Print / New Business", description: "企業向けパンフレット・販促物の提案、デザイン、入稿・印刷。カスタマイズ絵本の企画資料、Web企画、制作進行支援。" },
   ],
   contact: {
-    title: "一緒に、\n伝わるWebをつくる。", text: "Webサイト制作、情報設計、運用・改善に関するご相談など。連絡先は現在更新準備中です。",
+    title: "一緒に、\n伝わるWebをつくる。",
+    text: "Webサイト制作、情報設計、運用・改善に関するご相談など。",
+    email: "lilimo70@gmail.com",
   },
 };
