@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { portfolio } from "./content/portfolio.js";
 
 const Arrow = () => <span aria-hidden="true">↗</span>;
+const assetUrl = (path) => `${import.meta.env.BASE_URL}${path.replace(/^\//, "")}`;
 
 function Header() {
   const [open, setOpen] = useState(false);
@@ -35,7 +36,7 @@ function WorkCase({ work }) {
       <ul className="responsibilities" aria-label="担当領域">{work.responsibilities.map((item) => <li key={item}>{item}</li>)}</ul>
       <a className="text-link" href={work.href} target="_blank" rel="noreferrer">{work.linkLabel} <Arrow /></a>
     </div></div>
-    <a className="case-visual" href={work.href} target="_blank" rel="noreferrer" aria-label={`${work.title}の制作サイトを見る`}><img src={work.image} alt={work.imageAlt} /><span className="view-label">View Project <Arrow /></span></a>
+    <a className="case-visual" href={work.href} target="_blank" rel="noreferrer" aria-label={`${work.title}の制作サイトを見る`}><img src={assetUrl(work.image)} alt={work.imageAlt} /><span className="view-label">View Project <Arrow /></span></a>
   </article>;
 }
 
@@ -44,7 +45,7 @@ function ProfessionalArchive() {
   return <section className="archive" id="professional">
     <div className="archive-heading section-index"><b>{archive.number}</b><div><h2>{archive.title}</h2><p>{archive.lead}</p></div></div>
     <div className="archive-groups">{archive.groups.map((group, groupIndex) => <article className={`archive-group archive-group-${groupIndex + 1}`} key={group.id}>
-      <div className="archive-images">{group.images.map((image, index) => <figure key={image.src} className={`archive-image archive-image-${index + 1}`}><img src={image.src} alt={image.alt} loading="lazy" /></figure>)}</div>
+      <div className="archive-images">{group.images.map((image, index) => <figure key={image.src} className={`archive-image archive-image-${index + 1}`}><img src={assetUrl(image.src)} alt={image.alt} loading="lazy" /></figure>)}</div>
       <div className="archive-copy"><p className="archive-label">{group.label}</p><h3>{group.title}</h3><p>{group.description}</p>{group.highlight && <aside><b>{group.highlight.title}</b><p>{group.highlight.text}</p></aside>}{group.note && <small>{group.note}</small>}</div>
     </article>)}</div>
   </section>;
