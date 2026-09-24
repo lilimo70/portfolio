@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { portfolio } from "./content/portfolio.js";
 
 const Arrow = () => <span aria-hidden="true">↗</span>;
+const CarouselChevron = ({ direction }) => <svg className={direction === "next" ? "carousel-chevron is-next" : "carousel-chevron"} viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 8 12l7 7" /></svg>;
 const assetUrl = (path) => `${import.meta.env.BASE_URL}${path.replace(/^\//, "")}`;
 
 function Header() {
@@ -67,8 +68,8 @@ function WorkCarousel({ projects }) {
         <button className="solemo-image-button" type="button" onClick={() => setExpanded(true)} aria-label={`${activeProject.title}の画像を拡大表示`}>
           <img src={assetUrl(activeProject.src)} alt={activeProject.alt} />
         </button>
-        <button className="solemo-overlay-control is-previous" type="button" onClick={showPrevious} aria-label="前の実績を見る" disabled={isFirst}>〈</button>
-        <button className="solemo-overlay-control is-next" type="button" onClick={showNext} aria-label="次の実績を見る" disabled={isLast}>〉</button>
+        <button className="solemo-overlay-control is-previous" type="button" onClick={showPrevious} aria-label="前の実績を見る" disabled={isFirst}><CarouselChevron direction="previous" /></button>
+        <button className="solemo-overlay-control is-next" type="button" onClick={showNext} aria-label="次の実績を見る" disabled={isLast}><CarouselChevron direction="next" /></button>
       </div>
       {activeProject.description && <p className="solemo-slide-description">{activeProject.description}</p>}
     </div>
