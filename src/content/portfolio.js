@@ -1,5 +1,5 @@
 export const portfolio = {
-  owner: "NAO FUCHIWAKI",
+  owner: "Naoko Fuchiwaki",
   role: "EC / Web / Graphic / Promotion / Direction",
   hero: {
     title: "情報を整理し、\n伝わる構成を考え、\nWebとして形にする。",
