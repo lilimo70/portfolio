@@ -44,8 +44,10 @@ function WorkCarousel({ projects }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [expanded, setExpanded] = useState(false);
   const activeProject = projects[activeIndex];
-  const showPrevious = () => setActiveIndex((activeIndex - 1 + projects.length) % projects.length);
-  const showNext = () => setActiveIndex((activeIndex + 1) % projects.length);
+  const isFirst = activeIndex === 0;
+  const isLast = activeIndex === projects.length - 1;
+  const showPrevious = () => setActiveIndex((index) => Math.max(0, index - 1));
+  const showNext = () => setActiveIndex((index) => Math.min(projects.length - 1, index + 1));
 
   useEffect(() => {
     if (!expanded) return undefined;
@@ -61,15 +63,19 @@ function WorkCarousel({ projects }) {
   return <div className="solemo-carousel">
     <div className="solemo-slide">
       <p className="solemo-slide-title">{activeProject.title}</p>
-      <button className="solemo-image-button" type="button" onClick={() => setExpanded(true)} aria-label={`${activeProject.title}の画像を拡大表示`}>
-        <img src={assetUrl(activeProject.src)} alt={activeProject.alt} />
-      </button>
+      <div className="solemo-image-stage">
+        <button className="solemo-image-button" type="button" onClick={() => setExpanded(true)} aria-label={`${activeProject.title}の画像を拡大表示`}>
+          <img src={assetUrl(activeProject.src)} alt={activeProject.alt} />
+        </button>
+        <button className="solemo-overlay-control is-previous" type="button" onClick={showPrevious} aria-label="前の実績を見る" disabled={isFirst}>〈</button>
+        <button className="solemo-overlay-control is-next" type="button" onClick={showNext} aria-label="次の実績を見る" disabled={isLast}>〉</button>
+      </div>
       {activeProject.description && <p className="solemo-slide-description">{activeProject.description}</p>}
     </div>
     <div className="solemo-controls">
-      <button type="button" onClick={showPrevious} aria-label="前の実績を見る">←</button>
+      <button type="button" onClick={showPrevious} aria-label="前の実績を見る" disabled={isFirst}>←</button>
       <span aria-live="polite">{activeIndex + 1} / {projects.length}</span>
-      <button type="button" onClick={showNext} aria-label="次の実績を見る">→</button>
+      <button type="button" onClick={showNext} aria-label="次の実績を見る" disabled={isLast}>→</button>
     </div>
     {expanded && <div className="image-lightbox" role="dialog" aria-modal="true" aria-label={`${activeProject.title}の拡大画像`} onClick={() => setExpanded(false)}>
       <button className="lightbox-close" type="button" onClick={() => setExpanded(false)} aria-label="拡大画像を閉じる">×</button>
@@ -90,7 +96,7 @@ function ProfessionalArchive() {
 }
 
 function About() {
-  return <section className="about split-section" id="about"><div className="section-label"><p>About</p></div><h2>{portfolio.about.title}</h2><div className="body-copy">{portfolio.about.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div></section>;
+  return <section className="about split-section" id="about"><div className="section-label"><p>About</p></div><div className="about-profile"><h2>{portfolio.about.name}</h2><p className="about-role">{portfolio.about.role}</p><dl>{portfolio.about.overview.map((item) => <div key={item.label}><dt>{item.label}</dt><dd>{item.text}</dd></div>)}</dl></div><div className="body-copy">{portfolio.about.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div></section>;
 }
 
 function Expertise() {
@@ -105,6 +111,21 @@ function Contact() {
   return <section className="contact" id="contact"><div className="section-label"><p>Contact</p></div><h2>{portfolio.contact.title}</h2><div><p>{portfolio.contact.text}</p><a className="contact-email" href={`mailto:${portfolio.contact.email}`}>{portfolio.contact.email}</a></div></section>;
 }
 
+function BackToTopButton() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const updateVisibility = () => setVisible(window.scrollY > 480);
+    updateVisibility();
+    window.addEventListener("scroll", updateVisibility, { passive: true });
+    return () => window.removeEventListener("scroll", updateVisibility);
+  }, []);
+
+  const returnToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+
+  return <button className={visible ? "back-to-top is-visible" : "back-to-top"} type="button" onClick={returnToTop} aria-label="ページの先頭へ戻る">↑</button>;
+}
+
 export function App() {
-  return <><Header /><main><Hero /><div id="works" aria-label="Selected Works"><ProfessionalArchive />{portfolio.works.map((work) => <WorkCase work={work} key={work.id} />)}</div><About /><Expertise /><Experience /><Contact /></main><footer><a href="#top">{portfolio.owner}</a><span>© 2026</span></footer></>;
+  return <><Header /><main><Hero /><div id="works" aria-label="Selected Works"><ProfessionalArchive />{portfolio.works.map((work) => <WorkCase work={work} key={work.id} />)}</div><About /><Expertise /><Experience /><Contact /></main><footer><a href="#top">{portfolio.owner}</a><span>© 2026</span></footer><BackToTopButton /></>;
 }
