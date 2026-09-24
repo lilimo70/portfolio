@@ -40,12 +40,50 @@ function WorkCase({ work }) {
   </article>;
 }
 
+function WorkCarousel({ projects }) {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [expanded, setExpanded] = useState(false);
+  const activeProject = projects[activeIndex];
+  const showPrevious = () => setActiveIndex((activeIndex - 1 + projects.length) % projects.length);
+  const showNext = () => setActiveIndex((activeIndex + 1) % projects.length);
+
+  useEffect(() => {
+    if (!expanded) return undefined;
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") setExpanded(false);
+      if (event.key === "ArrowLeft") showPrevious();
+      if (event.key === "ArrowRight") showNext();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [expanded, activeIndex, projects.length]);
+
+  return <div className="solemo-carousel">
+    <div className="solemo-slide">
+      <p className="solemo-slide-title">{activeProject.title}</p>
+      <button className="solemo-image-button" type="button" onClick={() => setExpanded(true)} aria-label={`${activeProject.title}の画像を拡大表示`}>
+        <img src={assetUrl(activeProject.src)} alt={activeProject.alt} />
+      </button>
+      {activeProject.description && <p className="solemo-slide-description">{activeProject.description}</p>}
+    </div>
+    <div className="solemo-controls">
+      <button type="button" onClick={showPrevious} aria-label="前の実績を見る">←</button>
+      <span aria-live="polite">{activeIndex + 1} / {projects.length}</span>
+      <button type="button" onClick={showNext} aria-label="次の実績を見る">→</button>
+    </div>
+    {expanded && <div className="image-lightbox" role="dialog" aria-modal="true" aria-label={`${activeProject.title}の拡大画像`} onClick={() => setExpanded(false)}>
+      <button className="lightbox-close" type="button" onClick={() => setExpanded(false)} aria-label="拡大画像を閉じる">×</button>
+      <img src={assetUrl(activeProject.src)} alt={activeProject.alt} onClick={(event) => event.stopPropagation()} />
+    </div>}
+  </div>;
+}
+
 function ProfessionalArchive() {
   const archive = portfolio.professionalArchive;
   return <section className="archive" id="professional">
     <div className="archive-heading section-index"><b>{archive.number}</b><div><h2>{archive.title}</h2><p>{archive.lead}</p></div></div>
     <div className="archive-groups">{archive.groups.map((group, groupIndex) => <article className={`archive-group archive-group-${groupIndex + 1}`} key={group.id}>
-      <div className="archive-images">{group.images.map((image, index) => <figure key={image.src} className={`archive-image archive-image-${index + 1}`}><img src={assetUrl(image.src)} alt={image.alt} loading="lazy" /></figure>)}</div>
+      {group.projects ? <WorkCarousel projects={group.projects} /> : <div className="archive-images">{group.images.map((image, index) => <figure key={image.src} className={`archive-image archive-image-${index + 1}`}><img src={assetUrl(image.src)} alt={image.alt} loading="lazy" /></figure>)}</div>}
       <div className="archive-copy"><p className="archive-label">{group.label}</p><h3>{group.title}</h3><p>{group.description}</p>{group.highlight && <aside><b>{group.highlight.title}</b><p>{group.highlight.text}</p></aside>}{group.note && <small>{group.note}</small>}</div>
     </article>)}</div>
   </section>;
@@ -68,5 +106,5 @@ function Contact() {
 }
 
 export function App() {
-  return <><Header /><main><Hero /><section id="works" aria-label="Selected Works">{portfolio.works.map((work) => <WorkCase work={work} key={work.id} />)}</section><ProfessionalArchive /><About /><Expertise /><Experience /><Contact /></main><footer><a href="#top">{portfolio.owner}</a><span>© 2026</span></footer></>;
+  return <><Header /><main><Hero /><div id="works" aria-label="Selected Works"><ProfessionalArchive />{portfolio.works.map((work) => <WorkCase work={work} key={work.id} />)}</div><About /><Expertise /><Experience /><Contact /></main><footer><a href="#top">{portfolio.owner}</a><span>© 2026</span></footer></>;
 }
